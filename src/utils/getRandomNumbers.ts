@@ -7,7 +7,8 @@ export const getRandomNumbers = (count: number): RandomNumbersType => {
   for (let i = 1; i < count + 1; i++) {
     const randomNumbers: number[] = [];
     for (let j = 0; j < LOTTO.COUNT; j++) {
-      randomNumbers.push(Math.floor(Math.random() * LOTTO.MAX));
+      const number = Math.ceil(Math.random() * LOTTO.MAX);
+      randomNumbers.push(number);
     }
     result[i] = randomNumbers;
   }
