@@ -12,6 +12,7 @@ export const DimmedLayer = styled.div`
 
 export const Modal = styled.section`
   display: flex;
+  flex-direction: column;
   position: fixed;
 
   left: 50%;
@@ -22,6 +23,9 @@ export const Modal = styled.section`
 
   width: 350px;
   height: 500px;
+
+  padding: 32px 16px;
+  gap: 32px;
 
   border-radius: 4px;
 `;
@@ -36,4 +40,54 @@ export const CloseButton = styled.button`
   border: none;
 
   cursor: pointer;
+`;
+
+export const Title = styled.h2`
+  ${({ theme }) => theme.typography.title};
+  text-align: center;
+`;
+
+export const Table = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+export const HeaderRow = styled.div`
+  display: flex;
+  width: 100%;
+  height: 40px;
+
+  padding: 8px 0;
+
+  border-top: 1px solid ${({ theme }) => theme.color.grayScale5opacity12};
+  border-bottom: 1px solid ${({ theme }) => theme.color.grayScale5opacity12};
+
+  ${({ theme }) => theme.typography.body};
+  font-weight: 600;
+`;
+
+export const Row = styled.div`
+  display: flex;
+  width: 100%;
+  height: 40px;
+
+  padding: 8px 0;
+
+  border-bottom: 1px solid ${({ theme }) => theme.color.grayScale5opacity12};
+
+  ${({ theme }) => theme.typography.body};
+  font-weight: 400;
+`;
+
+export const Column = styled.div<{ $flex: number }>`
+  flex: ${({ $flex }) => $flex};
+  text-align: center;
+  white-space: nowrap;
+`;
+
+export const Return = styled.p`
+  ${({ theme }) => theme.typography.body};
+  font-weight: 600;
+
+  text-align: center;
 `;
