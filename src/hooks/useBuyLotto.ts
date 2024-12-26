@@ -7,6 +7,10 @@ export const useBuyLotto = () => {
 
   const lottoCounts = Math.floor(Number(amountInput) / 1000);
 
+  const validateBuyLotto = () => {
+    return Number(amountInput) % 1000 === 0;
+  };
+
   const buyLotto = () => {
     createLottoTickets();
     setAmountInput('');
@@ -24,6 +28,10 @@ export const useBuyLotto = () => {
   };
 
   const createLottoTickets = () => {
+    if (!validateBuyLotto()) {
+      alert('구입 금액은 1000원 단위로 입력 가능합니다.');
+      return;
+    }
     setLottoTickets(Array.from({ length: lottoCounts }).map(() => generateLottoNumbers()));
   };
 
