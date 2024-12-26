@@ -17,7 +17,8 @@ export const useInputWinNumbers = () => {
   useEffect(
     function checkValidNumbers() {
       const validateWinNumbers = () => {
-        return winNumbers.every((number) => number >= 1 && number <= 45);
+        const compareSet = new Set([...winNumbers]);
+        return winNumbers.every((number) => number >= 1 && number <= 45) && compareSet.size === 6;
       };
 
       const validateBonusNumber = () => {
