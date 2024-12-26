@@ -19,4 +19,9 @@ export const Button = styled.button`
   &:active {
     background-color: ${({ theme }) => theme.color.primaryVariants};
   }
+
+  &:disabled {
+    cursor: not-allowed;
+    background-color: ${({ theme }) => theme.color.grayScale3};
+  }
 `;
