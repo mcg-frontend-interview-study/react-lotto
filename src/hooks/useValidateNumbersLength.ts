@@ -1,12 +1,11 @@
 import { useState } from 'react';
-import { LOTTO } from '../constants/lotto';
 
 const useValidateNumbersLength = () => {
   const [isValid, setIsValid] = useState(true);
 
-  const validateNumbersLength = (numbers: string[]) => {
-    if (numbers.length !== LOTTO.COUNT) {
-      alert(`${LOTTO.COUNT}개의 번호를 입력해 주세요!`);
+  const validateNumbersLength = (numbers: string[], count: number) => {
+    if (numbers.length !== count) {
+      alert(`${count}개의 번호를 입력해 주세요!`);
       setIsValid(false);
       return false;
     }

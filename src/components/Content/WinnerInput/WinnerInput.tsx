@@ -13,9 +13,6 @@ function WinnerInput() {
   const { validateNumbersLength } = useValidateNumbersLength();
 
   const handleWinningNumberChange = (index: number, value: string) => {
-    if (!validateNumber(value)) return;
-    if (!validateRange(Number(value), LOTTO.MIN, LOTTO.MAX)) return;
-
     const newWinningNumbers = [...winningNumbers];
     newWinningNumbers[index] = value;
     setWinningNumbers(newWinningNumbers);
@@ -23,10 +20,23 @@ function WinnerInput() {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    console.log('실행');
-    console.log(winningNumbers);
-    if (!validateNumbersLength(winningNumbers)) return;
-    console.log('됨');
+    // 당첨 번호 검증
+    {
+      const isInvalid = winningNumbers.some((number) => {
+        if (!validateNumber(number)) return true;
+        if (!validateRange(Number(number), LOTTO.MIN, LOTTO.MAX)) return true;
+        return false;
+      });
+      if (isInvalid) return;
+    }
+    if (!validateNumbersLength(winningNumbers, LOTTO.COUNT)) return;
+
+    // 보너스 번호 검증
+    if (!validateNumber(bonusNumber)) return;
+    if (!validateRange(Number(bonusNumber), LOTTO.MIN, LOTTO.MAX)) return;
+    if (!validateNumbersLength([bonusNumber], LOTTO.MIN_COUNT)) return;
+
+    
   };
 
   return (
@@ -40,6 +50,7 @@ function WinnerInput() {
           <input
             key={index}
             value={number}
+            type="number"
             onChange={(e) => handleWinningNumberChange(index, e.target.value)}
           />
         ))}
@@ -48,6 +59,7 @@ function WinnerInput() {
         <S.LabelText>보너스 번호</S.LabelText>
         <input
           value={bonusNumber}
+          type="number"
           onChange={(e) => setBonusNumber(e.target.value)}
         />
       </>
