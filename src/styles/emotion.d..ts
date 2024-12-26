@@ -26,5 +26,13 @@ declare module '@emotion/styled' {
       button: string;
       caption: string;
     };
+    lineHeight: {
+      title: string;
+      subtitle: string;
+      body: string;
+      placeholder: string;
+      button: string;
+      caption: string;
+    };
   }
 }
