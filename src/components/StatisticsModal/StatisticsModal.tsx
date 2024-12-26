@@ -3,13 +3,23 @@ import { createPortal } from 'react-dom';
 import { useRef } from 'react';
 import { ClickOutsideDetector } from '../ClickOutsideDetector/ClickOutSideDetector';
 import { Button } from '../Button/Button';
+import { LottoRank } from '../../types/ServiceType';
 
 type StatisticsModalProps = {
+  lottoStatistics: LottoRank[];
   close: () => void;
 };
 
-export const StatisticsModal = ({ close }: StatisticsModalProps) => {
+export const StatisticsModal = ({ lottoStatistics, close }: StatisticsModalProps) => {
   const modalRef = useRef<HTMLElement>(null);
+  const getSpecificRankCount = (rank: number) => {
+    return lottoStatistics.filter((lotto) => lotto.rank === rank).length;
+  };
+
+  const getReturn = () => {
+    const totalPrice = lottoStatistics.reduce((acc, cur) => acc + cur.price, 0);
+    return Math.round((totalPrice / (lottoStatistics.length * 1000)) * 100);
+  };
 
   return createPortal(
     <Styled.DimmedLayer>
@@ -26,30 +36,30 @@ export const StatisticsModal = ({ close }: StatisticsModalProps) => {
             <Styled.Row>
               <Styled.Column $flex={3}>3개</Styled.Column>
               <Styled.Column $flex={4}>5,000</Styled.Column>
-              <Styled.Column $flex={3}>n개</Styled.Column>
+              <Styled.Column $flex={3}>{`${getSpecificRankCount(5)}개`}</Styled.Column>
             </Styled.Row>
             <Styled.Row>
               <Styled.Column $flex={3}>4개</Styled.Column>
               <Styled.Column $flex={4}>50,000</Styled.Column>
-              <Styled.Column $flex={3}>n개</Styled.Column>
+              <Styled.Column $flex={3}>{`${getSpecificRankCount(4)}개`}</Styled.Column>
             </Styled.Row>
             <Styled.Row>
               <Styled.Column $flex={3}>5개</Styled.Column>
               <Styled.Column $flex={4}>1,500,000</Styled.Column>
-              <Styled.Column $flex={3}>n개</Styled.Column>
+              <Styled.Column $flex={3}>{`${getSpecificRankCount(3)}개`}</Styled.Column>
             </Styled.Row>
             <Styled.Row>
               <Styled.Column $flex={3}>5개+보너스볼</Styled.Column>
               <Styled.Column $flex={4}>30,000,000</Styled.Column>
-              <Styled.Column $flex={3}>n개</Styled.Column>
+              <Styled.Column $flex={3}>{`${getSpecificRankCount(2)}개`}</Styled.Column>
             </Styled.Row>
             <Styled.Row>
               <Styled.Column $flex={3}>6개</Styled.Column>
               <Styled.Column $flex={4}>2,000,000,000</Styled.Column>
-              <Styled.Column $flex={3}>n개</Styled.Column>
+              <Styled.Column $flex={3}>{`${getSpecificRankCount(1)}개`}</Styled.Column>
             </Styled.Row>
           </Styled.Table>
-          <Styled.Return>당신의 총 수익률은 %입니다.</Styled.Return>
+          <Styled.Return>{`당신의 총 수익률은 ${getReturn()}%입니다.`}</Styled.Return>
           <Button>다시 시작하기</Button>
         </Styled.Modal>
       </ClickOutsideDetector>
