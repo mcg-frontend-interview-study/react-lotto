@@ -16,4 +16,8 @@ export const LottoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 10px;
+
+  max-height: 170px;
+
+  overflow: auto;
 `;
