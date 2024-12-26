@@ -21,6 +21,10 @@ export const StatisticsModal = ({ lottoStatistics, close }: StatisticsModalProps
     return Math.round((totalPrice / (lottoStatistics.length * 1000)) * 100);
   };
 
+  const restart = () => {
+    window.location.reload();
+  };
+
   return createPortal(
     <Styled.DimmedLayer>
       <ClickOutsideDetector targetRef={modalRef} onClickOutside={close}>
@@ -60,7 +64,7 @@ export const StatisticsModal = ({ lottoStatistics, close }: StatisticsModalProps
             </Styled.Row>
           </Styled.Table>
           <Styled.Return>{`당신의 총 수익률은 ${getReturn()}%입니다.`}</Styled.Return>
-          <Button>다시 시작하기</Button>
+          <Button onClick={restart}>다시 시작하기</Button>
         </Styled.Modal>
       </ClickOutsideDetector>
     </Styled.DimmedLayer>,
