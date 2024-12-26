@@ -16,6 +16,8 @@ export const Main = styled.main`
   justify-content: center;
   align-items: center;
 
+  gap: 28px;
+
   width: 414px;
   margin: 84px auto;
   padding: 42px 16px;
