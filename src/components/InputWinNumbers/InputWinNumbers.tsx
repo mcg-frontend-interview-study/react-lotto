@@ -4,7 +4,7 @@ import { InputGroup } from '../InputGroup/InputGroup';
 import * as Styled from './InputWinNumbers.style';
 
 export const InputWinNumber = () => {
-  const { handleWinNumbers, handleBonusNumber } = useInputWinNumbers();
+  const { handleWinNumbers, handleBonusNumber, canSubmit } = useInputWinNumbers();
 
   return (
     <Styled.Form>
@@ -25,7 +25,7 @@ export const InputWinNumber = () => {
           style={{ inputWidth: 34, justifyContent: 'flex-end', textAlign: 'right' }}
         />
       </Styled.InputField>
-      <Button>결과 확인하기</Button>
+      <Button disabled={!canSubmit}>결과 확인하기</Button>
     </Styled.Form>
   );
 };
