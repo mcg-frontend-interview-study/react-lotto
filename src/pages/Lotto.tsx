@@ -5,19 +5,15 @@ import { InputOrderAmount } from '../components/InputOrderAmount/InputOrderAmoun
 import { useBuyLotto } from '../hooks/useBuyLotto';
 
 export const Lotto = () => {
-  const { amountInput, setAmountInput, handleLottoCounts, lottoCounts } = useBuyLotto();
+  const { amountInput, setAmountInput, buyLotto, lottoTickets } = useBuyLotto();
 
   return (
     <Styled.Page>
       <Header />
       <Styled.Main>
         <Styled.Title>🎱 내 번호 당첨 확인 🎱</Styled.Title>
-        <InputOrderAmount
-          amountInput={amountInput}
-          setAmountInput={setAmountInput}
-          handleLottoCounts={handleLottoCounts}
-        />
-        {lottoCounts}
+        <InputOrderAmount amountInput={amountInput} setAmountInput={setAmountInput} buyLotto={buyLotto} />
+        {lottoTickets}
       </Styled.Main>
       <Footer />
     </Styled.Page>

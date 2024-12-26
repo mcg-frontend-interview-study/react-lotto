@@ -5,13 +5,13 @@ import { Button } from '../Button/Button';
 type InputOrderAmountProps = {
   amountInput: string;
   setAmountInput: React.Dispatch<React.SetStateAction<string>>;
-  handleLottoCounts: () => void;
+  buyLotto: () => void;
 };
 
-export const InputOrderAmount = ({ amountInput, setAmountInput, handleLottoCounts }: InputOrderAmountProps) => {
+export const InputOrderAmount = ({ amountInput, setAmountInput, buyLotto }: InputOrderAmountProps) => {
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    handleLottoCounts();
+    buyLotto();
   };
 
   return (
