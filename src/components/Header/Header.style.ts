@@ -2,12 +2,11 @@ import styled from 'styled-components';
 
 export const Header = styled.header`
   display: flex;
+  justify-content: center;
   align-items: center;
 
   width: 100%;
   height: 64px;
-
-  padding-left: 130px;
 
   background-color: ${({ theme }) => theme.color.primary};
 `;
