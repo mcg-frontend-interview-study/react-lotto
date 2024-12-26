@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import { LottoTicket } from '../types/ServiceType';
 
 export const useBuyLotto = () => {
   const [amountInput, setAmountInput] = useState<string>('');
-  const [lottoTickets, setLottoTickets] = useState<number[][]>([]);
+  const [lottoTickets, setLottoTickets] = useState<LottoTicket[]>([]);
 
   const lottoCounts = Math.floor(Number(amountInput) / 1000);
 
@@ -19,7 +20,7 @@ export const useBuyLotto = () => {
       lottoNumbers.add(randomNum);
     }
 
-    return Array.from(lottoNumbers);
+    return Array.from(lottoNumbers).sort((a, b) => a - b);
   };
 
   const createLottoTickets = () => {
