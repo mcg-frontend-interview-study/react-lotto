@@ -12,7 +12,7 @@ export const Header = styled.header`
   background-color: ${({ theme }) => theme.color.primary};
 `;
 
-export const Text = styled.p`
+export const Title = styled.h1`
   ${({ theme }) => theme.typography.title}
   color: ${({ theme }) => theme.color.grayScale1}
 `;
