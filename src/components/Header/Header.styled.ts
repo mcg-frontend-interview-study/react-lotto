@@ -9,5 +9,6 @@ export const Layout = styled.div`
 
 export const TitleText = styled.h1`
   font-size: ${theme.fontSize.title};
+  font-weight: ${theme.fontWeight.title};
   color: ${theme.color.greyScale1};
 `;
