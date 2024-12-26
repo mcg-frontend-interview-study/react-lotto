@@ -4,6 +4,9 @@ import useValidateRange from '../../../hooks/useValidateRange';
 import useValidateNumbersLength from '../../../hooks/useValidateNumbersLength';
 import useValidateNumber from '../../../hooks/useValidateNumber';
 import { LOTTO } from '../../../constants/lotto';
+import useModal from '../../../hooks/useModal';
+import Modal from '../../Modal/Modal';
+import AnalyzedResult from '../AnalyzedResult/AnalyzedResult';
 
 function WinnerInput() {
   const { winningNumbers, bonusNumber, setWinningNumbers, setBonusNumber } =
@@ -11,6 +14,7 @@ function WinnerInput() {
   const { validateNumber } = useValidateNumber();
   const { validateRange } = useValidateRange();
   const { validateNumbersLength } = useValidateNumbersLength();
+  const { openModal, isModalOpen } = useModal();
 
   const handleWinningNumberChange = (index: number, value: string) => {
     const newWinningNumbers = [...winningNumbers];
@@ -36,36 +40,42 @@ function WinnerInput() {
     if (!validateRange(Number(bonusNumber), LOTTO.MIN, LOTTO.MAX)) return;
     if (!validateNumbersLength([bonusNumber], LOTTO.MIN_COUNT)) return;
 
-    
+    openModal();
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <S.LabelText>
-        지난 주 당첨번호 6개와 보너스 번호 1개를 입력해주세요.
-      </S.LabelText>
-      <>
-        <S.LabelText>당첨 번호</S.LabelText>
-        {winningNumbers.map((number, index) => (
+    <>
+      <form onSubmit={handleSubmit}>
+        <S.LabelText>
+          지난 주 당첨번호 6개와 보너스 번호 1개를 입력해주세요.
+        </S.LabelText>
+        <>
+          <S.LabelText>당첨 번호</S.LabelText>
+          {winningNumbers.map((number, index) => (
+            <input
+              key={index}
+              value={number}
+              type="number"
+              onChange={(e) => handleWinningNumberChange(index, e.target.value)}
+            />
+          ))}
+        </>
+        <>
+          <S.LabelText>보너스 번호</S.LabelText>
           <input
-            key={index}
-            value={number}
+            value={bonusNumber}
             type="number"
-            onChange={(e) => handleWinningNumberChange(index, e.target.value)}
+            onChange={(e) => setBonusNumber(e.target.value)}
           />
-        ))}
-      </>
-      <>
-        <S.LabelText>보너스 번호</S.LabelText>
-        <input
-          value={bonusNumber}
-          type="number"
-          onChange={(e) => setBonusNumber(e.target.value)}
-        />
-      </>
+        </>
 
-      <button type="submit">결과 확인하기</button>
-    </form>
+        <button type="submit">결과 확인하기</button>
+      </form>
+
+      <Modal isOpen={isModalOpen}>
+        <AnalyzedResult />
+      </Modal>
+    </>
   );
 }
 
