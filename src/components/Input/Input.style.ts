@@ -5,6 +5,7 @@ export const Input = styled.input`
   height: 36px;
 
   border: 1px solid ${({ theme }) => theme.color.grayScale3};
+  border-radius: 4px;
   color: ${({ theme }) => theme.color.grayScale5};
 
   &::placeholder {
@@ -21,6 +22,8 @@ export const Label = styled.label`
 export const Container = styled.fieldset<{ $gap?: number }>`
   display: flex;
   flex-direction: column;
+
+  width: 100%;
 
   gap: ${({ $gap = 4 }) => `${$gap}px`};
 `;
