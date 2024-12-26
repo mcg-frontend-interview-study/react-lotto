@@ -4,6 +4,7 @@ import { Header } from '../components/Header/Header';
 import { InputOrderAmount } from '../components/InputOrderAmount/InputOrderAmount';
 import { useBuyLotto } from '../hooks/useBuyLotto';
 import { ShowMyTickets } from '../components/ShowMyTickets/ShowMyTickets';
+import { InputWinNumber } from '../components/InputWinNumbers/InputWinNumbers';
 
 export const Lotto = () => {
   const { amountInput, setAmountInput, buyLotto, lottoTickets } = useBuyLotto();
@@ -14,7 +15,12 @@ export const Lotto = () => {
       <Styled.Main>
         <Styled.Title>🎱 내 번호 당첨 확인 🎱</Styled.Title>
         <InputOrderAmount amountInput={amountInput} setAmountInput={setAmountInput} buyLotto={buyLotto} />
-        {lottoTickets.length > 0 && <ShowMyTickets lottoTickets={lottoTickets} />}
+        {lottoTickets.length > 0 && (
+          <>
+            <ShowMyTickets lottoTickets={lottoTickets} />
+            <InputWinNumber />
+          </>
+        )}
       </Styled.Main>
       <Footer />
     </Styled.Page>
