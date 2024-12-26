@@ -7,18 +7,24 @@ import WinnerInput from './WinnerInput/WinnerInput';
 import useValidateInputValue from '../../hooks/useValidateInputValue';
 
 function Content() {
-  const { lottoNumbers, setLottoNumbers, setLottoCount } = useLottoContext();
-  const { inputValue, validateInputValue } = useValidateInputValue('');
+  const {
+    inputAmountValue,
+    setInputAmountValue,
+    lottoNumbers,
+    setLottoNumbers,
+    setLottoCount,
+  } = useLottoContext();
+  const { validateInputValue, isValid } = useValidateInputValue('');
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  if (inputRef.current) {
-    inputRef.current.focus();
-  }
+  // if (inputRef.current) {
+  //   inputRef.current.focus();
+  // }
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    const validatedValue = validateInputValue(inputValue);
+    const validatedValue = validateInputValue(inputAmountValue);
     if (validatedValue !== undefined) {
       const count = validatedValue / 1000;
       setLottoNumbers(getRandomNumbers(count));
@@ -35,16 +41,16 @@ function Content() {
         <S.Input
           ref={inputRef}
           placeholder="금액"
-          value={inputValue}
+          value={inputAmountValue}
           onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            validateInputValue(event.target.value)
+            setInputAmountValue(event.target.value)
           }
           type="number"
         />
         <button type="submit">구입</button>
       </form>
 
-      {Object.keys(lottoNumbers).length > 0 && (
+      {isValid && Object.keys(lottoNumbers).length > 0 && (
         <>
           <Numbers />
           <WinnerInput />
