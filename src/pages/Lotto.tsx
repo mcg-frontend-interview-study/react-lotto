@@ -4,10 +4,17 @@ import { Header } from '../components/Header/Header';
 import { InputOrderAmount } from '../components/InputOrderAmount/InputOrderAmount';
 import { useBuyLotto } from '../hooks/useBuyLotto';
 import { ShowMyTickets } from '../components/ShowMyTickets/ShowMyTickets';
-import { InputWinNumber } from '../components/InputWinNumbers/InputWinNumbers';
+import { InputWinNumbers } from '../components/InputWinNumbers/InputWinNumbers';
+import { useReducer } from 'react';
+import { StatisticsModal } from '../components/StatisticsModal/StatisticsModal';
 
 export const Lotto = () => {
   const { amountInput, setAmountInput, buyLotto, lottoTickets } = useBuyLotto();
+  const [isModalOpen, setIsModalOpen] = useReducer((state: boolean) => !state, false);
+
+  const handleModalState = () => {
+    setIsModalOpen();
+  };
 
   return (
     <Styled.Page>
@@ -18,11 +25,12 @@ export const Lotto = () => {
         {lottoTickets.length > 0 && (
           <>
             <ShowMyTickets lottoTickets={lottoTickets} />
-            <InputWinNumber />
+            <InputWinNumbers handleModalState={handleModalState} />
           </>
         )}
       </Styled.Main>
       <Footer />
+      {isModalOpen && <StatisticsModal close={handleModalState} />}
     </Styled.Page>
   );
 };
