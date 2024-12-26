@@ -2,16 +2,28 @@ import { ChangeEvent, useRef, useState } from 'react';
 import * as S from './Content.styled';
 import { getRandomNumbers } from '../../utils/getRandomNumbers';
 import { LOTTO } from '../../constants/lotto';
+import Numbers from './Numbers/Numbers';
+import useLottoContext from '../../hooks/useLottoContext';
+import WinnerInput from './WinnerInput/WinnerInput';
 
 function Content() {
+  const { lottoNumbers, setLottoNumbers, setLottoCount } = useLottoContext();
   const [inputValue, setInputValue] = useState('');
+
   const inputRef = useRef<HTMLInputElement>(null);
+
+  if (inputRef.current) {
+    inputRef.current.focus();
+  }
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     const validatedValue = validateInputValue(inputValue);
     if (validatedValue !== undefined) {
-      getRandomNumbers(validatedValue);
+      const count = validatedValue / 1000;
+      setLottoNumbers(getRandomNumbers(count));
+      setLottoCount(count);
+      console.log(count);
     }
   };
 
@@ -36,10 +48,6 @@ function Content() {
     return numberValue;
   };
 
-  if (inputRef.current) {
-    inputRef.current.focus();
-  }
-
   return (
     <S.Layout>
       <S.TitleText>🎱 내 번호 당첨 확인 🎱</S.TitleText>
@@ -55,6 +63,13 @@ function Content() {
         />
         <button type="submit">구입</button>
       </form>
+
+      {Object.keys(lottoNumbers).length > 0 && (
+        <>
+          <Numbers />
+          <WinnerInput />
+        </>
+      )}
     </S.Layout>
   );
 }
