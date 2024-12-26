@@ -9,6 +9,7 @@ declare module 'styled-components' {
       grayScale3: string;
       grayScale4: string;
       grayScale5: string;
+      grayScale5opacity12: string;
     };
     typography: {
       title: string;

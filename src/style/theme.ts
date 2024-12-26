@@ -8,6 +8,7 @@ export const theme: DefaultTheme = {
     grayScale3: '#B4B4B4',
     grayScale4: '#8B8B8B',
     grayScale5: '#000000',
+    grayScale5opacity12: '#0000001F',
   },
   typography: {
     title: `
