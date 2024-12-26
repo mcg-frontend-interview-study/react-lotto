@@ -5,6 +5,8 @@ export const LottoStore = styled.article`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  margin-bottom: 35px;
 `;
 
 export const StoreTitle = styled.h1`
