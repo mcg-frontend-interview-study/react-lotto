@@ -16,10 +16,16 @@ const MoneyPanel = ({ money, setMoney }: MoneyPanelProps) => {
 
   const handlePurchaseClick = () => {
     const numericValue = Number(inputValue);
-    if (isNaN(numericValue)) {
-      alert('유효한 숫자를 입력해주세요.');
+    if (inputValue === '') {
+      alert('금액을 입력해주세요.');
       return;
     }
+
+    if (/^\d+$/.test(inputValue) === false) {
+      alert('금액에는 숫자만 입력할 수 있습니다.');
+      return;
+    }
+
     setMoney(numericValue);
   };
 

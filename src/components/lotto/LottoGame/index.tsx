@@ -13,7 +13,7 @@ const LottoGame = () => {
 
   const setValidateMoney = (value: number) => {
     if (value % LOTTO_PRICE !== 0) {
-      alert('금액은 1000원 단위의 양수여야 합니다.');
+      alert('금액은 1000원 단위여야 합니다.');
       return;
     }
 
