@@ -15,5 +15,7 @@ export const Button = styled.button<ButtonProps>`
   border: 1px solid lightgray;
   border-radius: 1px;
 
+  cursor: pointer;
+
   ${({ $style }) => $style && { ...$style }};
 `;

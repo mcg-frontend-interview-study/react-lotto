@@ -2,11 +2,13 @@ import * as S from './styles';
 import { LOTTO_INFO } from '../../constants/lotto';
 import { Input, Button } from '../../common';
 import { useState } from 'react';
+import { ResultModal } from '../index';
+import { lotto, WinningLotto } from '../../../types/lotto';
 
 interface InputContainerProps {
   label: string;
   count: number;
-  values: string | string[]; // 그냥 배열로 통일하자 ...
+  values: string | string[]; // TODO : 그냥 배열로 통일
   onChange: (index: number, value: string) => void;
 }
 const InputContainer = ({ label, count, values, onChange }: InputContainerProps) => {
@@ -29,10 +31,20 @@ const InputContainer = ({ label, count, values, onChange }: InputContainerProps)
 };
 
 interface WinningLottoPanelProps {
+  validateWinningLotto: WinningLotto | null;
+  money: number;
+  lottos: lotto[];
   setWinningNumber: (numbers: number[], bonusNumber: number) => void;
+  resetLottoGame: () => void;
 }
 
-const WinningLottoPanel = ({ setWinningNumber }: WinningLottoPanelProps) => {
+const WinningLottoPanel = ({
+  money,
+  lottos,
+  validateWinningLotto,
+  resetLottoGame,
+  setWinningNumber,
+}: WinningLottoPanelProps) => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [winningLotto, setWinningLotto] = useState<string[]>(Array(LOTTO_INFO.count).fill(''));
   const [bonusNumber, setBonusNumber] = useState('');
@@ -51,7 +63,7 @@ const WinningLottoPanel = ({ setWinningNumber }: WinningLottoPanelProps) => {
     const totalNumber = [...numericLottos, numericBonusNumber];
 
     if (totalNumber.some((num) => num === 0)) {
-      // 값이 빈 경우 ...
+      // 값이 빈 경우
       alert('로또 번호 입력을 완료해주세요.');
       return;
     }
@@ -62,7 +74,11 @@ const WinningLottoPanel = ({ setWinningNumber }: WinningLottoPanelProps) => {
     }
 
     setWinningNumber(numericLottos, numericBonusNumber);
-    //setIsModalOpen(!isModalOpen);
+    setIsModalOpen(true);
+  };
+
+  const handleModalClose = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -85,6 +101,15 @@ const WinningLottoPanel = ({ setWinningNumber }: WinningLottoPanelProps) => {
       <Button onClick={handleSubmit} $style={{ width: '90%', margin: '0 auto' }}>
         결과 확인하기
       </Button>
+      {isModalOpen && (
+        <ResultModal
+          lottos={lottos}
+          money={money}
+          winningLotto={validateWinningLotto}
+          resetLottoGame={resetLottoGame}
+          handleClose={handleModalClose}
+        />
+      )}
     </S.WinningLottoPanel>
   );
 };

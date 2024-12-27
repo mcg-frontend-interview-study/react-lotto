@@ -1,12 +1,13 @@
 import * as S from './styles';
 import { Button, Input } from '../../common/index';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 interface MoneyPanelProps {
+  money: number;
   setMoney: (value: number) => void;
 }
 
-const MoneyPanel = ({ setMoney }: MoneyPanelProps) => {
+const MoneyPanel = ({ money, setMoney }: MoneyPanelProps) => {
   const [inputValue, setInputValue] = useState('');
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -22,12 +23,17 @@ const MoneyPanel = ({ setMoney }: MoneyPanelProps) => {
     setMoney(numericValue);
   };
 
+  useEffect(() => {
+    if (money === 0) setInputValue('');
+  }, [money]);
+
   return (
     <S.MoneyPanel>
       <S.GuideMessage>구입할 금액을 입력해주세요.</S.GuideMessage>
       <S.InputContainer>
         <Input
           type="number"
+          value={inputValue}
           placeholder="금액"
           $style={{ width: '80%', height: 'auto' }}
           onChange={handleInputChange}

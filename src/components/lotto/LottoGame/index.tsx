@@ -9,7 +9,7 @@ const LottoGame = () => {
   const [money, setMoney] = useState(0);
   const lottoCount = money / LOTTO_PRICE;
   const { lottos = [] } = useLottos({ lottoCount });
-  const [winningLotto, setWinningLotto] = useState<WinningLotto>();
+  const [winningLotto, setWinningLotto] = useState<WinningLotto | null>(null);
 
   const setValidateMoney = (value: number) => {
     if (value % LOTTO_PRICE !== 0) {
@@ -23,8 +23,6 @@ const LottoGame = () => {
   const setValidWinningLotto = (numbers: number[], bonusNumber: number) => {
     const totalNumber = [...numbers, bonusNumber];
 
-    console.log(totalNumber);
-
     if (new Set(totalNumber).size !== totalNumber.length) {
       alert('로또 번호는 중복될 수 없습니다.');
       return;
@@ -35,18 +33,33 @@ const LottoGame = () => {
       return;
     }
 
-    // 값 가공... 아니면 그냥 이렇게 따로 쓸까?
+    setWinningLotto({
+      basic: [...numbers],
+      bonus: bonusNumber,
+    });
+  };
 
-    //setWinningLotto(value)
+  const resetLottoGame = () =>{
+    setMoney(0);
+    // lottos = [];
+    setWinningLotto(null);
   };
 
   const isLottoGenerated = money > 0 && lottos.length === lottoCount;
 
   return (
     <S.LottoGame>
-      <LottoStore setMoney={setValidateMoney} />
+      <LottoStore money={money} setMoney={setValidateMoney} />
       {isLottoGenerated && <LottoDisplay lottoCount={lottoCount} lottos={lottos} />}
-      {isLottoGenerated && <WinningLottoPanel setWinningNumber={setValidWinningLotto} />}
+      {isLottoGenerated && (
+        <WinningLottoPanel
+          money={money}
+          lottos={lottos}
+          validateWinningLotto={winningLotto}
+          setWinningNumber={setValidWinningLotto}
+          resetLottoGame={resetLottoGame}
+        />
+      )}
     </S.LottoGame>
   );
 };
