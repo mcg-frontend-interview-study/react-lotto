@@ -13,7 +13,7 @@ const LottoDisplay = ({ lottoCount, lottos }: LottoDisplayProps) => {
       <S.GuideMessage>{`총 ${lottoCount}개를 구매하였습니다.`}</S.GuideMessage>
       <S.LottoContainer>
         {lottos.map((lotto, idx) => (
-          <Lotto key={idx} lotto={lotto} />
+          <Lotto key={`lotto-${idx}`} lotto={lotto} />
         ))}
       </S.LottoContainer>
     </S.LottoDisplay>
