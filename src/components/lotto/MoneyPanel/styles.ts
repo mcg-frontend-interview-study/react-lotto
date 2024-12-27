@@ -9,7 +9,10 @@ export const MoneyPanel = styled.div`
 `;
 
 export const GuideMessage = styled.p`
-  font-size: 12px;
+  font-size: 13px;
+  text-align: left;
+
+  margin-left: 20px;
   margin-bottom: 10px;
 `;
 

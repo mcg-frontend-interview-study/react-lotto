@@ -38,7 +38,7 @@ const MoneyPanel = ({ money, setMoney }: MoneyPanelProps) => {
           $style={{ width: '80%', height: 'auto' }}
           onChange={handleInputChange}
         />
-        <Button onClick={handlePurchaseClick} $style={{ height: '100%;' }}>
+        <Button onClick={handlePurchaseClick} $style={{ height: '100%;', borderRadius: '3px' }}>
           구입
         </Button>
       </S.InputContainer>

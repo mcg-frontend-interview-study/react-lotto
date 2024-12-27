@@ -26,7 +26,7 @@ const useLottos = ({ lottoCount }: UseLottosProps) => {
     setLottos(lottos);
   };
 
-  useEffect(() => { // 빈 배열 초기화로직 필요없겠지? 
+  useEffect(() => {
     getLottos();
   }, [lottoCount]);
 

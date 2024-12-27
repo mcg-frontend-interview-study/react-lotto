@@ -1,7 +1,7 @@
 import * as S from './styles';
 import { LOTTO_INFO } from '../../constants/lotto';
 import { Input, Button } from '../../common';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { ResultModal } from '../index';
 import { lotto, WinningLotto } from '../../../types/lotto';
 
@@ -10,12 +10,13 @@ interface InputContainerProps {
   count: number;
   values: string | string[]; // TODO : 그냥 배열로 통일
   onChange: (index: number, value: string) => void;
+  $inputStyle?: React.CSSProperties;
 }
-const InputContainer = ({ label, count, values, onChange }: InputContainerProps) => {
+const InputContainer = ({ label, count, values, onChange, $inputStyle }: InputContainerProps) => {
   return (
     <S.NumberContainer>
       <S.NumberLabel>{label}</S.NumberLabel>
-      <S.NumberInputContainer>
+      <S.NumberInputContainer $inputStyle={$inputStyle}>
         {Array.from({ length: count }).map((_, index) => (
           <Input
             key={index}
@@ -84,7 +85,7 @@ const WinningLottoPanel = ({
   return (
     <S.WinningLottoPanel>
       <S.GuideMessage>{`지난 주 당첨번호 ${LOTTO_INFO.count}개와 보너스 번호 ${1}개를 입력해주세요.`}</S.GuideMessage>
-      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '20px' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '25px' }}>
         <InputContainer
           label="당첨 번호"
           count={LOTTO_INFO.count}
@@ -96,9 +97,10 @@ const WinningLottoPanel = ({
           count={1}
           values={[bonusNumber]}
           onChange={(_, value) => setBonusNumber(value)}
+          $inputStyle={{ justifyContent: 'flex-end' }}
         />
       </div>
-      <Button onClick={handleSubmit} $style={{ width: '90%', margin: '0 auto' }}>
+      <Button onClick={handleSubmit} $style={{ width: '100%', margin: '0 auto', borderRadius: '3px' }}>
         결과 확인하기
       </Button>
       {isModalOpen && (
