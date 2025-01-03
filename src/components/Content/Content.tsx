@@ -35,20 +35,23 @@ function Content() {
 
   return (
     <S.Layout>
-      <S.TitleText>🎱 내 번호 당첨 확인 🎱</S.TitleText>
-      <S.InputLabelText>구입할 금액을 입력해주세요.</S.InputLabelText>
-
+      <S.SubTitleText>🎱 내 번호 당첨 확인 🎱</S.SubTitleText>
       <form onSubmit={handleSubmit}>
-        <S.Input
-          ref={inputRef}
-          placeholder="금액"
-          value={inputAmountValue}
-          onChange={(event: ChangeEvent<HTMLInputElement>) =>
-            setInputAmountValue(event.target.value)
-          }
-          type="number"
-        />
-        <button type="submit">구입</button>
+        <S.InputBox>
+          <S.InputLabelText>구입할 금액을 입력해주세요.</S.InputLabelText>
+          <S.InputButtonBox>
+            <S.Input
+              ref={inputRef}
+              placeholder="금액"
+              value={inputAmountValue}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                setInputAmountValue(event.target.value)
+              }
+              type="number"
+            />
+            <S.InputButton type="submit">구입</S.InputButton>
+          </S.InputButtonBox>
+        </S.InputBox>
       </form>
 
       {isValid && Object.keys(lottoNumbers).length > 0 && (
