@@ -27,23 +27,42 @@ function WinnerInput() {
     setWinningNumbers(newWinningNumbers);
   };
 
+  const checkWinningNumbers = () => {
+    const isValid =
+      winningNumbers.every(
+        (number) =>
+          validateNumber(number) &&
+          validateRange(Number(number), LOTTO.MIN, LOTTO.MAX),
+      ) &&
+      validateNumbersLength(winningNumbers, LOTTO.COUNT) &&
+      new Set(winningNumbers).size === LOTTO.COUNT;
+
+    return isValid;
+  };
+
+  const checkBonusNumber = () => {
+    const isValid =
+      validateNumber(bonusNumber) &&
+      validateRange(Number(bonusNumber), LOTTO.MIN, LOTTO.MAX) &&
+      validateNumbersLength([bonusNumber], LOTTO.MIN_COUNT) &&
+      !winningNumbers.includes(bonusNumber);
+
+    return isValid;
+  };
+
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
     // 당첨 번호 검증
-    {
-      const isInvalid = winningNumbers.some((number) => {
-        if (!validateNumber(number)) return true;
-        if (!validateRange(Number(number), LOTTO.MIN, LOTTO.MAX)) return true;
-        return false;
-      });
-      if (isInvalid) return;
+    if (!checkWinningNumbers()) {
+      alert('정확한 당첨 번호를 입력해 주세요!');
+      return;
     }
-    if (!validateNumbersLength(winningNumbers, LOTTO.COUNT)) return;
 
     // 보너스 번호 검증
-    if (!validateNumber(bonusNumber)) return;
-    if (!validateRange(Number(bonusNumber), LOTTO.MIN, LOTTO.MAX)) return;
-    if (!validateNumbersLength([bonusNumber], LOTTO.MIN_COUNT)) return;
+    if (!checkBonusNumber()) {
+      alert('정확한 보너스 번호를 입력해 주세요!');
+      return;
+    }
 
     openModal();
   };
