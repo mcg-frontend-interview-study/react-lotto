@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react';
+import { ChangeEvent, useEffect, useRef } from 'react';
 import * as S from './Content.styled';
 import { getRandomNumbers } from '../../utils/getRandomNumbers';
 import Numbers from './Numbers/Numbers';
@@ -19,12 +19,15 @@ function Content() {
 
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // if (inputRef.current) {
-  //   inputRef.current.focus();
-  // }
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, []);
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
+    
     const validatedValue = validateInputValue(inputAmountValue);
     if (validatedValue !== undefined) {
       const count = validatedValue / 1000;
@@ -42,12 +45,12 @@ function Content() {
           <S.InputButtonBox>
             <S.Input
               ref={inputRef}
+              type="number"
               placeholder="금액"
               value={inputAmountValue}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 setInputAmountValue(event.target.value)
               }
-              type="number"
             />
             <S.InputButton type="submit">구입</S.InputButton>
           </S.InputButtonBox>
