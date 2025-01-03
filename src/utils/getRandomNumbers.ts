@@ -3,14 +3,17 @@ import { RandomNumbersType } from '../types/randomNumbers';
 
 export const getRandomNumbers = (count: number): RandomNumbersType => {
   const result: RandomNumbersType = {};
-
-  for (let i = 0; i < count; i++) {
+  let i = 0;
+  while (Object.keys(result).length !== count) {
     const randomNumbers: number[] = [];
-    for (let j = 0; j < LOTTO.COUNT; j++) {
+    while (randomNumbers.length !== LOTTO.COUNT) {
       const number = Math.ceil(Math.random() * LOTTO.MAX);
-      randomNumbers.push(number);
+      if (!randomNumbers.includes(number)) {
+        randomNumbers.push(number);
+      }
     }
     result[i] = randomNumbers;
+    i++;
   }
   return result;
 };
