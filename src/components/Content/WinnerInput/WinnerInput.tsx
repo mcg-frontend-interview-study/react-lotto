@@ -9,12 +9,17 @@ import Modal from '../../Modal/Modal';
 import AnalyzedResult from '../AnalyzedResult/AnalyzedResult';
 
 function WinnerInput() {
-  const { winningNumbers, bonusNumber, setWinningNumbers, setBonusNumber } =
-    useLottoContext();
+  const {
+    winningNumbers,
+    bonusNumber,
+    setWinningNumbers,
+    setBonusNumber,
+    setInputAmountValue,
+  } = useLottoContext();
   const { validateNumber } = useValidateNumber();
   const { validateRange } = useValidateRange();
   const { validateNumbersLength } = useValidateNumbersLength();
-  const { openModal, isModalOpen } = useModal();
+  const { openModal, closeModal, isModalOpen } = useModal();
 
   const handleWinningNumberChange = (index: number, value: string) => {
     const newWinningNumbers = [...winningNumbers];
@@ -41,6 +46,14 @@ function WinnerInput() {
     if (!validateNumbersLength([bonusNumber], LOTTO.MIN_COUNT)) return;
 
     openModal();
+  };
+
+  const handleCloseModal = () => {
+    setInputAmountValue('');
+    setWinningNumbers([]);
+    setBonusNumber('');
+    closeModal();
+    window.location.reload();
   };
 
   return (
@@ -73,7 +86,7 @@ function WinnerInput() {
       </form>
 
       <Modal isOpen={isModalOpen}>
-        <AnalyzedResult />
+        <AnalyzedResult onClose={handleCloseModal} />
       </Modal>
     </>
   );

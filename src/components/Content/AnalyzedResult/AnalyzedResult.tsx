@@ -1,5 +1,11 @@
+import * as S from './AnalyzedResult.styled';
 import { useEffect, useRef, useState } from 'react';
 import useLottoContext from '../../../hooks/useLottoContext';
+import { PRIZE_MONEY } from '../../../constants/lotto';
+
+interface AnalyzedResultProps {
+  onClose: () => void;
+}
 
 interface ResultsType {
   matchCount: number;
@@ -22,7 +28,7 @@ const INITIAL_RESULT_VALUE = {
   '3': 0,
 };
 
-function AnalyzedResult() {
+function AnalyzedResult({ onClose }: AnalyzedResultProps) {
   const { lottoNumbers, winningNumbers, bonusNumber, inputAmountValue } =
     useLottoContext();
   const [result, setResult] = useState<ResultType>(INITIAL_RESULT_VALUE);
@@ -71,17 +77,9 @@ function AnalyzedResult() {
   }, []);
 
   const calculateProfit = (result: ResultType) => {
-    const prizeMoney = {
-      '3': 5000,
-      '4': 50000,
-      '5': 1500000,
-      bonus: 30000000,
-      '6': 2000000000,
-    };
-
     let totalProfit = 0;
     Object.entries(result).forEach(([key, count]) => {
-      const prize = prizeMoney[key as keyof typeof prizeMoney] ?? 0;
+      const prize = PRIZE_MONEY[key as keyof typeof PRIZE_MONEY] ?? 0;
       totalProfit += prize * count;
     });
 
@@ -91,23 +89,58 @@ function AnalyzedResult() {
   const calculateYield = () => {
     const totalInvestment = parseInt(inputAmountValue, 10) ?? 0;
     const totalProfit = calculateProfit(result);
-    return ((totalProfit - totalInvestment) / totalInvestment) * 100;
+    return Math.max(
+      0,
+      ((totalProfit - totalInvestment) / totalInvestment) * 100,
+    );
   };
 
   return (
-    <div>
-      🏆 당첨 통계 🏆
-      <>일치 갯수</>
-      <>당첨금</>
-      <>당첨 갯수</>
-      
-      {Object.entries(result).map(([key, value]) => (
-        <div key={key}>
-          {key === 'bonus' ? '5개+보너스볼' : `${key}개`} {value}개
-        </div>
-      ))}
-      <>수익률: {calculateYield().toFixed(2)}%</>
-    </div>
+    <S.Layout>
+      <S.Title>🏆 당첨 통계 🏆</S.Title>
+      <S.Table>
+        <S.Thead>
+          <tr>
+            <S.Th>일치 갯수</S.Th>
+            <S.Th>당첨금</S.Th>
+            <S.Th>당첨 갯수</S.Th>
+          </tr>
+        </S.Thead>
+        <tbody>
+          <S.Tr>
+            <S.Td>3개</S.Td>
+            <S.Td>{PRIZE_MONEY[3].toLocaleString()}</S.Td>
+            <S.Td>{result[3]}개</S.Td>
+          </S.Tr>
+          <S.Tr>
+            <S.Td>4개</S.Td>
+            <S.Td>{PRIZE_MONEY[4].toLocaleString()}</S.Td>
+            <S.Td>{result[4]}개</S.Td>
+          </S.Tr>
+          <S.Tr>
+            <S.Td>5개</S.Td>
+            <S.Td>{PRIZE_MONEY[5].toLocaleString()}</S.Td>
+            <S.Td>{result[5]}개</S.Td>
+          </S.Tr>
+          <S.Tr>
+            <S.Td>5개+보너스볼</S.Td>
+            <S.Td>{PRIZE_MONEY.bonus.toLocaleString()}</S.Td>
+            <S.Td>{result.bonus}개</S.Td>
+          </S.Tr>
+          <S.Tr>
+            <S.Td>6개</S.Td>
+            <S.Td>{PRIZE_MONEY[6].toLocaleString()}</S.Td>
+            <S.Td>{result[6]}개</S.Td>
+          </S.Tr>
+        </tbody>
+      </S.Table>
+      <S.YieldText>
+        당신의 총 수익률은 {calculateYield().toFixed(2).toLocaleString()}
+        %입니다.
+      </S.YieldText>
+
+      <S.Button onClick={onClose}>다시 시작하기</S.Button>
+    </S.Layout>
   );
 }
 

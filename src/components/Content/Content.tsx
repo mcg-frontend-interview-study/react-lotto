@@ -14,7 +14,8 @@ function Content() {
     setLottoNumbers,
     setLottoCount,
   } = useLottoContext();
-  const { validateInputValue, isValid } = useValidateInputValue('');
+  const { validateInputValue, isValid } =
+    useValidateInputValue(inputAmountValue);
 
   const inputRef = useRef<HTMLInputElement>(null);
 

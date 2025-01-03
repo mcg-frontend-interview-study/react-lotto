@@ -13,7 +13,6 @@ export const ContentWrapper = styled.div`
   transform: translate(-50%, -50%);
 
   width: 350px;
-  height: 500px;
 
   background-color: ${theme.color.greyScale1};
   padding: 32px 16px;
