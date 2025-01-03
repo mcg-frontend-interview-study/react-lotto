@@ -5,12 +5,14 @@ function Numbers() {
   const { lottoNumbers, lottoCount } = useLottoContext();
 
   return (
-    <div>
+    <S.Layout>
       <S.LabelText>총 {lottoCount}개를 구매하였습니다.</S.LabelText>
-      {Object.entries(lottoNumbers).map(([key, values]) => (
-        <div key={key}>🎟️ {values.join(', ')}</div>
-      ))}
-    </div>
+      <>
+        {Object.entries(lottoNumbers).map(([key, values]) => (
+          <S.LottoNumbersText key={key}>🎟️ {values.join(', ')}</S.LottoNumbersText>
+        ))}
+      </>
+    </S.Layout>
   );
 }
 

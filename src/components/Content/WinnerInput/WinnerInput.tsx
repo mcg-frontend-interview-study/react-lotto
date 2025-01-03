@@ -58,32 +58,38 @@ function WinnerInput() {
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <S.Form onSubmit={handleSubmit}>
         <S.LabelText>
           지난 주 당첨번호 6개와 보너스 번호 1개를 입력해주세요.
         </S.LabelText>
-        <>
-          <S.LabelText>당첨 번호</S.LabelText>
-          {winningNumbers.map((number, index) => (
-            <input
-              key={index}
-              value={number}
+        <S.InputSection>
+          <S.InputLeft>
+            <S.LabelText>당첨 번호</S.LabelText>
+            <S.InputBox>
+              {winningNumbers.map((number, index) => (
+                <S.Input
+                  key={index}
+                  value={number}
+                  type="number"
+                  onChange={(e) =>
+                    handleWinningNumberChange(index, e.target.value)
+                  }
+                />
+              ))}
+            </S.InputBox>
+          </S.InputLeft>
+          <S.InputRight>
+            <S.LabelText>보너스 번호</S.LabelText>
+            <S.Input
+              value={bonusNumber}
               type="number"
-              onChange={(e) => handleWinningNumberChange(index, e.target.value)}
+              onChange={(e) => setBonusNumber(e.target.value)}
             />
-          ))}
-        </>
-        <>
-          <S.LabelText>보너스 번호</S.LabelText>
-          <input
-            value={bonusNumber}
-            type="number"
-            onChange={(e) => setBonusNumber(e.target.value)}
-          />
-        </>
+          </S.InputRight>
+        </S.InputSection>
 
-        <button type="submit">결과 확인하기</button>
-      </form>
+        <S.Button type="submit">결과 확인하기</S.Button>
+      </S.Form>
 
       <Modal isOpen={isModalOpen}>
         <AnalyzedResult onClose={handleCloseModal} />
