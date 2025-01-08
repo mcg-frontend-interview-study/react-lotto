@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import { LOTTO_NUMBER_COUNT } from '../../constants/lotto';
 import { LottoAnswer } from '../../serviceType';
 import Input from '../Input/Input';
@@ -15,8 +14,8 @@ type Props = {
 };
 
 const LottoAnswerInputSection = ({ lottoAnswerDefault, onSubmit }: Props) => {
-  const { lottoAnswer, handleNumbers, handleBonusNumber, errorMessage, isValidLottoAnswer, clear } =
-    useLottoAnswerInput();
+  const { lottoAnswer, handleNumbers, handleBonusNumber, errorMessage, isValidLottoAnswer } =
+    useLottoAnswerInput(lottoAnswerDefault);
 
   const submit = () => {
     if (!isValidLottoAnswer(lottoAnswer)) {
@@ -26,10 +25,6 @@ const LottoAnswerInputSection = ({ lottoAnswerDefault, onSubmit }: Props) => {
     onSubmit({ numbers: lottoAnswer.numbers.map(Number), bonusNumber: Number(lottoAnswer.bonusNumber) });
   };
 
-  useEffect(() => {
-    if (lottoAnswerDefault && lottoAnswerDefault.numbers.length === 0) clear();
-  }, [lottoAnswerDefault]);
-
   return (
     <>
       <Text>지난 주 당첨번호 {LOTTO_NUMBER_COUNT}개와 보너스 번호 1개를 입력해주세요.</Text>
@@ -38,13 +33,7 @@ const LottoAnswerInputSection = ({ lottoAnswerDefault, onSubmit }: Props) => {
           <Text>당첨 번호</Text>
           <ol css={lottoAnswerInputStyle}>
             {LOTTO_INPUT_LIST.map((_, i) => (
-              <Input
-                key={i}
-                value={lottoAnswer.numbers[i]}
-                onChange={(e) => handleNumbers(e, i)}
-                type='number'
-                inputMode='numeric'
-              />
+              <Input key={i} value={lottoAnswer.numbers[i]} onChange={(e) => handleNumbers(e, i)} inputMode='numeric' />
             ))}
           </ol>
         </div>
