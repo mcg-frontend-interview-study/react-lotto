@@ -1,9 +1,7 @@
+import { MainPage } from './components/layout/index';
+
 function App() {
-  return (
-    <>
-      <p>Hello World!</p>
-    </>
-  );
+  return <MainPage />;
 }
 
 export default App;
