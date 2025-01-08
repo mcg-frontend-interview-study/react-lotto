@@ -1,7 +1,15 @@
+import { ThemeProvider } from 'styled-components';
+import { GlobalStyle } from './style/GlobalStyle';
+import { theme } from './style/theme';
+import { Lotto } from './pages/Lotto';
+
 function App() {
   return (
     <>
-      <p>Hello World!</p>
+      <ThemeProvider theme={theme}>
+        <GlobalStyle />
+        <Lotto />
+      </ThemeProvider>
     </>
   );
 }
